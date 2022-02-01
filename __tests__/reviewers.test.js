@@ -33,7 +33,7 @@ describe('tests for the reviewers resource', () => {
       .post('/api/v1/reviewers')
       .send(testObj);
     
-    expect(await Reviewer.getAll()).toEqual([{ id: expect.any(String), name: 'Siri', company:'Apple' }]);
+    expect(await Reviewer.getAll()).toEqual(expect.arrayContaining([{ id: expect.any(String), name: 'Siri', company:'Apple' }]));
   });
 
   it('should be able to update a reviewer', async () => {
