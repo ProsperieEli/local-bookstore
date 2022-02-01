@@ -17,7 +17,7 @@ describe('tests for the reviewers resource', () => {
     pool.end();
   });
   
-  it('should be able to create an reviewer', async () => {
+  it('should be able to create a reviewer', async () => {
     const res = await Reviewer.insert(testObj);
     expect(res).toEqual({ id: expect.any(String), name: 'Siri', company:'Apple' });
   });
@@ -36,28 +36,28 @@ describe('tests for the reviewers resource', () => {
     expect(await Reviewer.getAll()).toEqual([{ id: expect.any(String), name: 'Siri', company:'Apple' }]);
   });
 
-  it('should be able to update an reviewer', async () => {
-    const reviewers = await request(app)
+  it('should be able to update a reviewer', async () => {
+    const { body } = await request(app)
       .post('/api/v1/reviewers')
       .send(testObj);
     
     const res = await request(app)
-      .put(`/api/v1/reviewers/${reviewers.id}`)
+      .patch(`/api/v1/reviewers/${body.id}`)
       .send(testObjTwo);
     
-    const expected = { id: reviewers.id, name: 'Alexa', company:'Amazon'  };
+    const expected = { id:expect.any(String), name: 'Alexa', company:'Amazon'  };
 
     expect(res.body).toEqual(expected);
-    expect(await Reviewer.getById(reviewers.id)).toEqual(expected);
+    expect(await Reviewer.getById(body.id)).toEqual(expected);
   });
   it('should be able to delete by id', async () => {
-    const reviewer = await request(app)
+    const { body } = await request(app)
       .post('/api/v1/reviewers')
       .send(testObj);
     const res = await request(app)
-      .delete(`/api/v1/reviewers/${reviewer.id}`);
+      .delete(`/api/v1/reviewers/${body.id}`);
     
-    expect(res.body).toEqual(reviewer);
-    expect(await Reviewer.getById(reviewer.id)).toBeNull();
+    expect(res.body).toEqual(body);
+    expect(await Reviewer.getById(body.id)).toBeNull();
   });
 });

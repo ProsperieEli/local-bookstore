@@ -8,4 +8,4 @@ CREATE TABLE reviewers (
     company varchar(140) NOT NULL
 );
 
-INSERT INTO reviewers (name, company) VALUES('Dano', 'Destruction');
+-- INSERT INTO reviewers (name, company) VALUES('Dano', 'Destruction');
