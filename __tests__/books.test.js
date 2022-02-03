@@ -96,16 +96,12 @@ describe('backend routes', () => {
     });
   });
 
-  it.skip('should be able to list books', async () => {
-    await Book.insert({ title: 'sample book' });
+  it('should be able to list books', async () => {
     const res = await request(app).get('/api/v1/books');
 
     expect(res.body).toEqual(
       expect.arrayContaining([
-        {
-          id: expect.any(String),
-          title: 'sample book',
-        },
+        { authors: [], id: '1', released: 2021, title: 'Coffee Memoirs' },
       ])
     );
   });
