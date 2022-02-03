@@ -2,7 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-const Book = require('../lib/models/Book');
+// const Book = require('../lib/models/Book');
 
 describe('backend routes', () => {
   beforeEach(() => {
@@ -34,14 +34,17 @@ describe('backend routes', () => {
       name: 'Jessica Hagedorn',
       dob: '1972-01-01',
       pob: 'The Philippines',
+      bookIds: []
     });
 
     const author2 = await request(app).post('/api/v1/authors').send({
       name: 'Frantz Fanon',
       dob: '1930-01-01',
       pob: 'A city',
+      bookIds: []
     });
-
+    // eslint-disable-next-line no-console
+    console.log(author1.body, '-------------', author2.body);
     //then post a book with an authorIds array
     const res = await request(app)
       .post('/api/v1/books')

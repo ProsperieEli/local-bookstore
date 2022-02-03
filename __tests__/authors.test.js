@@ -13,16 +13,18 @@ describe('backend routes', () => {
     pool.end();
   });
 
-  it('should be able to create a author', async () => {
+  it('should be able to create a author with a books array', async () => {
+    
     const res = await request(app)
       .post('/api/v1/authors')
-      .send({ name: 'sample author', dob: '1900-11-22', pob: 'sample pob' });
+      .send({ name: 'sample author', dob: '1900-11-22', pob: 'sample pob', bookIds:[] });
 
     expect(res.body).toEqual({
       id: expect.any(String),
       name: 'sample author',
       dob: expect.stringContaining('1900-11-22'),
       pob: 'sample pob',
+      books: []
     });
   });
 
@@ -30,8 +32,15 @@ describe('backend routes', () => {
     const author = await Author.insert({ name: 'sample author' });
     const res = await request(app).get(`/api/v1/authors/${author.id}`);
 
-    expect(res.body).toEqual(author);
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      name:'sample author',
+      dob: null,
+      pob: null,
+      books: [null]
+    });
   });
+
 
   it('should be able to list authors', async () => {
     await Author.insert({ name: 'sample author' });
@@ -39,11 +48,12 @@ describe('backend routes', () => {
 
     expect(res.body).toEqual(
       expect.arrayContaining([
-        {
-          id: expect.any(String),
+        { id: expect.any(String),
           name: 'sample author',
+          books: [],
         },
       ])
     );
   });
 });
+
