@@ -1,6 +1,6 @@
 -- Use this file to define your SQL tables
 -- The SQL in this file will be executed when you run `npm run setup-db`
-DROP TABLE IF EXISTS publishers, authors, reviewers;
+DROP TABLE IF EXISTS publishers, authors, reviewers, books, books_authors;
 
 
 CREATE TABLE reviewers (
@@ -38,3 +38,21 @@ CREATE TABLE authors (
 INSERT INTO authors (name, dob, pob)
 VALUES
     ('James Baldwin', '1924-08-02', 'New York City');
+
+CREATE TABLE books (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  title TEXT NOT NULL,
+  publisher BIGINT REFERENCES publishers (id),
+  released NUMERIC(4) NOT NULL
+);
+
+INSERT INTO books (title, publisher, released)
+VALUES
+    ('Coffee Memoirs', (SELECT id FROM publishers WHERE name = 'Elijah Prosperie'), 2021);
+
+CREATE TABLE books_authors (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  book_id BIGINT REFERENCES books (id),
+  author_id BIGINT REFERENCES authors (id)
+);
+
