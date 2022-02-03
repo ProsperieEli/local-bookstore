@@ -1,6 +1,6 @@
 -- Use this file to define your SQL tables
 -- The SQL in this file will be executed when you run `npm run setup-db`
-DROP TABLE IF EXISTS publishers, authors, reviewers;
+DROP TABLE IF EXISTS publishers, authors, reviewers, reviews;
 
 
 CREATE TABLE reviewers (
@@ -10,6 +10,14 @@ CREATE TABLE reviewers (
 );
 
 INSERT INTO reviewers (name, company) VALUES('Dano', 'Destruction');
+
+CREATE TABLE reviews (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  rating INT CHECK (rating > 0 AND rating < 6),
+  reviewer TEXT REFERENCES reviewers (id),
+  review varchar(140) NOT NULL,
+  book INT REFERENCES books (id)
+);
 
 CREATE TABLE publishers (
         id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
