@@ -2,7 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-// const Book = require('../lib/models/Book');
+
 
 describe('backend routes', () => {
   beforeEach(() => {
@@ -13,20 +13,6 @@ describe('backend routes', () => {
     pool.end();
   });
 
-  // it('should be able to create a book', async () => {
-  //   const res = await request(app).post('/api/v1/books').send({
-  //     title: 'sample book',
-  //     released: 1972,
-  //     publisherId: 20,
-  //   });
-
-  //   expect(res.body).toEqual({
-  //     id: expect.any(String),
-  //     title: 'sample book',
-  //     released: 1972,
-  //     publisherId: 20,
-  //   });
-  // });
 
   it('should be able to create a book with a specified author', async () => {
     //first post some authors
@@ -43,8 +29,7 @@ describe('backend routes', () => {
       pob: 'A city',
       bookIds: []
     });
-    // eslint-disable-next-line no-console
-    console.log(author1.body, '-------------', author2.body);
+    
     //then post a book with an authorIds array
     const res = await request(app)
       .post('/api/v1/books')
@@ -73,7 +58,7 @@ describe('backend routes', () => {
       dob: '1972-01-01',
       pob: 'a place',
     });
-
+    console.log(author1.body);
     const book = await request(app)
       .post('/api/v1/books')
       .send({
@@ -82,6 +67,7 @@ describe('backend routes', () => {
         publisherId: '50',
         authorIds: [author1.body.id],
       });
+    console.log(book.body);
 
     const res = await request(app).get(`/api/v1/books/${book.body.id}`);
 
