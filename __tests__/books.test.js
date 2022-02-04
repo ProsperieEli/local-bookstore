@@ -45,6 +45,8 @@ describe('backend routes', () => {
       title: 'book w multi authors',
       released: 1990,
       publisherId: '30',
+      publishers: [],
+      reviews:[],
       authors: [
         { id: author1.body.id, name: author1.body.name },
         { id: author2.body.id, name: author2.body.name },
@@ -75,7 +77,8 @@ describe('backend routes', () => {
       id: String(book.body.id),
       title: 'sample book',
       released: 1990,
-      publisherId: '50',
+      publishers:[null],
+      reviews: [null],
       authors: [
         {
           id: expect.any(Number),
@@ -90,7 +93,7 @@ describe('backend routes', () => {
 
     expect(res.body).toEqual(
       expect.arrayContaining([
-        { authors: [], id: '1', released: 2021, title: 'Coffee Memoirs' },
+        { publisher:[{ id:1, name:'Elijah Prosperie' }], id: '1', released: 2021, title: 'Coffee Memoirs' },
       ])
     );
   });

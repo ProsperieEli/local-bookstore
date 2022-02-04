@@ -43,14 +43,13 @@ describe('backend routes', () => {
 
 
   it('should be able to list authors', async () => {
-    await Author.insert({ name: 'sample author' });
+    await Author.insert({ name: 'James Baldwin', dob:null, pob:null });
     const res = await request(app).get('/api/v1/authors');
 
     expect(res.body).toEqual(
       expect.arrayContaining([
         { id: expect.any(String),
-          name: 'sample author',
-          books: [],
+          name: 'James Baldwin',
         },
       ])
     );
