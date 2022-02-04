@@ -33,7 +33,9 @@ CREATE TABLE books (
 
 INSERT INTO books (title, publisher_id, released)
 VALUES
-    ('Coffee Memoirs', (SELECT id FROM publishers WHERE name = 'Elijah Prosperie'), 2021);
+    ('Coffee Memoirs', (SELECT id FROM publishers WHERE name = 'Elijah Prosperie'), 2021),
+    ('Coffee Memoirs 2', (SELECT id FROM publishers WHERE name = 'Elijah Prosperie'), 2022),
+    ('Coffee Memoirs 3', (SELECT id FROM publishers WHERE name = 'Elijah Prosperie'), 2022);
 
 CREATE TABLE reviewers (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -50,6 +52,12 @@ CREATE TABLE reviews (
   review varchar(140) NOT NULL,
   book INT REFERENCES books (id)
 );
+
+INSERT INTO reviews (rating, reviewer, review, book) 
+VALUES
+  (4, 1, 'sample review', 1),
+  (2, 1, 'sample review B', 2),
+  (3, 1, 'sample review C', 3);
 
 
 CREATE TABLE authors (
