@@ -45,6 +45,8 @@ describe('backend routes', () => {
       title: 'book w multi authors',
       released: 1990,
       publisherId: '30',
+      publishers: [],
+      reviews:[],
       authors: [
         { id: author1.body.id, name: author1.body.name },
         { id: author2.body.id, name: author2.body.name },
@@ -58,7 +60,7 @@ describe('backend routes', () => {
       dob: '1972-01-01',
       pob: 'a place',
     });
-    console.log(author1.body);
+    
     const book = await request(app)
       .post('/api/v1/books')
       .send({
@@ -67,7 +69,7 @@ describe('backend routes', () => {
         publisherId: '50',
         authorIds: [author1.body.id],
       });
-    console.log(book.body);
+    
 
     const res = await request(app).get(`/api/v1/books/${book.body.id}`);
 
@@ -75,7 +77,8 @@ describe('backend routes', () => {
       id: String(book.body.id),
       title: 'sample book',
       released: 1990,
-      publisherId: '50',
+      publishers:[null],
+      reviews: [null],
       authors: [
         {
           id: expect.any(Number),
@@ -90,7 +93,7 @@ describe('backend routes', () => {
 
     expect(res.body).toEqual(
       expect.arrayContaining([
-        { authors: [], id: '1', released: 2021, title: 'Coffee Memoirs' },
+        { publisher:[{ id:1, name:'Elijah Prosperie' }], id: '1', released: 2021, title: 'Coffee Memoirs' },
       ])
     );
   });

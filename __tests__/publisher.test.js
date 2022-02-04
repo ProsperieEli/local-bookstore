@@ -21,6 +21,7 @@ describe('backend routes', () => {
       country: 'United States',
     });
     expect(res.body).toEqual({
+      books:[],
       id: expect.any(String),
       name: 'Elijah Prosperie',
       city: 'Seattle',
@@ -29,25 +30,24 @@ describe('backend routes', () => {
     });
   });
 
-  it('should get the id', async () => {
+  it('should get the publisher by  id', async () => {
     const publish = await Publisher.INSERT({
-      name: 'Elijah Prosperie',
+      name: 'someone else',
       city: 'Seattle',
       state: 'Washington',
       country: 'United States',
     });
     const res = await request(app).get(`/api/v1/publishers/${publish.id}`);
-    expect(res.body).toEqual(publish);
+    expect(res.body).toEqual({ books:[null], city:'Seattle', state: 'Washington', country:'United States', id: expect.any(String), name:'someone else' });
   });
 
   it('should get all published', async () => {
-    const publish = await Publisher.INSERT({
+    await Publisher.INSERT({
+      id: expect.any(String),
       name: 'Elijah Prosperie',
-      city: 'Seattle',
-      state: 'Washington',
-      country: 'United States',
+     
     });
     const res = await request(app).get('/api/v1/publishers');
-    expect(res.body).toEqual(expect.arrayContaining([publish]));
+    expect(res.body).toEqual(expect.arrayContaining([{ 'id': '2', 'name': 'Elijah Prosperie' }]));
   });
 });
