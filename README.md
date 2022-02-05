@@ -1,7 +1,11 @@
-# backend-template
+# Backend for practicing advanced SQL queries
 
-A starter template for Express projects at Alchemy Code Lab. We'll be using this in the "Backend / API" portion of the program.
+Built with PostgreSQL and NodeJS; deployed via Heroku.
 
-## Getting Started
+## Routes
 
-Click "Use this template" to create a new repo with your user as the owner. Then clone down the newly created repo and get hacking!
+https://gentle-eyrie-29752.herokuapp.com/api/v1/authors
+https://gentle-eyrie-29752.herokuapp.com/api/v1/books
+https://gentle-eyrie-29752.herokuapp.com/api/v1/reviews
+https://gentle-eyrie-29752.herokuapp.com/api/v1/reviewers
+https://gentle-eyrie-29752.herokuapp.com/api/v1/publishers
